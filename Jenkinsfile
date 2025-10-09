@@ -1,6 +1,11 @@
 pipeline{
     agent any
 
+    environment{
+        APP_NAME = 'MyApp'
+        DEPLOY_ENV = 'production'
+    }
+    
     stages{
         stage('checkout'){
             steps{
