@@ -6,10 +6,6 @@ pipeline{
         DEPLOY_ENV = 'production'
     }
 
-    tools{
-        mvn 'Maven_3_9_6'
-    }
-
     stages{
         stage('audit check'){
             steps{
