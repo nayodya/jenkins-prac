@@ -1,9 +1,13 @@
 pipeline{
     agent any
 
+    parameters{
+        booleanParam(name: 'RELEASE', defaultValue: false, description: 'Is this a release build?')
+        }
+
     environment{
-        APP_NAME = 'MyApp'
-        DEPLOY_ENV = 'production'
+        NEW_RELEASE = "1.0.0"
+        INITIAL_RELEASE = "0.9.0"
     }
 
     stages{
@@ -23,17 +27,32 @@ pipeline{
                 checkout scm
             }
         }
+
         stage('build'){
+            environment{
+                VERSION_SUFFIX = ""
+            }
             steps{
                 echo 'building the app ...'
                 sh 'mvn -f pom.xml clean package'
             }
         }
+
         stage('tests'){
             steps{
                 echo 'testing the app ...'
             }
         }
+        stage('Publish Artifacts'){
+            when {
+                expression { return params.RELEASE }
+            }
+            steps{
+                echo 'Publishing the build artifacts ...'
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }
+
         stage('deploy'){
             input{
                 message 'Are you sure you want to deploy to ${DEPLOY_ENV}?'
