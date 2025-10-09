@@ -1,9 +1,10 @@
 pipeline{
-    agent any
-
-    parameters{
-        booleanParam(name: 'RELEASE', defaultValue: false, description: 'Is this a release build?')
-        }
+    agent {
+        docker {
+            image 'maven:latest'
+            args 'u root'
+        } 
+    }
 
     environment{
         NEW_RELEASE = "1.0.0"
@@ -24,9 +25,6 @@ pipeline{
         }
 
         stage('build'){
-            environment{
-                VERSION_SUFFIX = ""
-            }
             steps{
                 echo 'building the app ...'
                 // sh 'mvn -f pom.xml clean package'
@@ -35,16 +33,10 @@ pipeline{
 
         stage('tests'){
             steps{
-                echo 'testing the app ...'
-            }
-        }
-        stage('Publish Artifacts'){
-            when {
-                expression { return params.RELEASE }
-            }
-            steps{
-                echo 'Publishing the build artifacts ...'
-                // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                sh'''
+                    echo 'testing the app ...'
+                    mvn test
+                '''
             }
         }
 
