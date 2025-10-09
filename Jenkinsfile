@@ -11,7 +11,7 @@ pipeline{
             steps{
                 echo 'performing audit checks ...'
                 sh '''
-                    git -version
+                    git --version
                     java -version
                     mvn -version
                 '''
