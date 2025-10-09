@@ -23,8 +23,12 @@ pipeline{
             }
         }
         stage('deploy'){
-            steps{
-                echo 'deploying the app ...'
+            input{
+                message 'Are you sure you want to deploy to ${DEPLOY_ENV}?'
+                ok 'Yes, deploy now'
+                parameters{
+                    string(name: 'DEPLOYER_NAME', defaultValue: 'admin', description: 'Name of the person deploying')
+                }
             }
         }
         
