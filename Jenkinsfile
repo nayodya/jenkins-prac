@@ -13,8 +13,25 @@ pipeline{
             }
         }
         stage('build'){
-            steps{
-                echo 'building the app ... ${APP_NAME} for ${DEPLOY_ENV}'
+            parallel{
+                stage('linux-build'){
+                    agent any
+                    steps{
+                        echo 'building the app for linux ...'
+                    }
+                }
+                stage('windows-build'){
+                    agent any
+                    steps{
+                        echo 'building the app for windows ...'
+                    }
+                }
+                stage('mac-build'){
+                    agent any
+                    steps{
+                        echo 'building the app for mac ...'
+                    }
+                }
             }
         }
         stage('tests'){
