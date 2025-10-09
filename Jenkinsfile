@@ -29,6 +29,9 @@ pipeline{
                 parameters{
                     string(name: 'DEPLOYER_NAME', defaultValue: 'admin', description: 'Name of the person deploying')
                 }
+                steps{
+                    echo 'deploying the app ...'
+                }
             }
         }
         
