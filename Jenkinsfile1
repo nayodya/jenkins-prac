@@ -14,7 +14,11 @@ pipeline{
     stages{
         stage('audit check'){
             steps{
-                echo 'performing audit checks ...'
+                sh'''
+                    git --version
+                    mvn -version
+                    java -version
+                '''
             }
         }
 
@@ -63,12 +67,4 @@ pipeline{
             echo 'The pipeline has failed!'
         }
     }
-}
-
-void auditChecks(){
-    sh '''
-        git --version
-        java -version
-        mvn -version
-        '''
 }
