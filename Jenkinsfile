@@ -5,7 +5,7 @@ pipeline{
         APP_NAME = 'MyApp'
         DEPLOY_ENV = 'production'
     }
-    
+
     stages{
         stage('checkout'){
             steps{
@@ -14,7 +14,7 @@ pipeline{
         }
         stage('build'){
             steps{
-                echo 'building the app ...'
+                echo 'building the app ... ${APP_NAME} for ${DEPLOY_ENV}'
             }
         }
         stage('tests'){
