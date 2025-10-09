@@ -49,7 +49,7 @@ pipeline{
             }
             steps{
                 echo 'Publishing the build artifacts ...'
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }
 
