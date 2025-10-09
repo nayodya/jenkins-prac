@@ -24,25 +24,9 @@ pipeline{
             }
         }
         stage('build'){
-            parallel{
-                stage('linux-build'){
-                    agent any
-                    steps{
-                        echo 'building the app for linux ...'
-                    }
-                }
-                stage('windows-build'){
-                    agent any
-                    steps{
-                        echo 'building the app for windows ...'
-                    }
-                }
-                stage('mac-build'){
-                    agent any
-                    steps{
-                        echo 'building the app for mac ...'
-                    }
-                }
+            steps{
+                echo 'building the app ...'
+                sh 'mvn -f pom.xml clean package'
             }
         }
         stage('tests'){
