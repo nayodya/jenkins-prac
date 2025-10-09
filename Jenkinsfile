@@ -7,6 +7,17 @@ pipeline{
     }
 
     stages{
+        stage('audit check'){
+            steps{
+                echo 'performing audit checks ...'
+                sh '''
+                    git -version
+                    java -version
+                    mvn -version
+                '''
+            }
+        }
+
         stage('checkout'){
             steps{
                 checkout scm
