@@ -31,7 +31,7 @@ pipeline{
         stage('build'){
             steps{
                 echo 'building the app ...'
-                // sh 'mvn -f pom.xml clean package'
+                sh 'mvn clean compile'
             }
         }
 
@@ -46,15 +46,16 @@ pipeline{
 
         stage('deploy'){
             input{
-                message 'Are you sure you want to deploy to ${DEPLOY_ENV}?'
+                message 'Are you sure you want to deploy?'
                 ok 'Yes, deploy now'
                 parameters{
                     string(name: 'DEPLOYER_NAME', defaultValue: 'admin', description: 'Name of the person deploying')
                 }
             }   
             steps{
-                    echo 'deploying the app ...'
-                }
+                echo 'deploying the app ...'
+                echo "Deployed by: ${params.DEPLOYER_NAME}"
+            }
         }
         
     }
