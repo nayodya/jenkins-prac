@@ -2,7 +2,8 @@ pipeline{
     agent {
         docker {
             image 'maven:latest'
-        }       
+            args '-u root'
+        } 
     }
 
     environment{
@@ -17,6 +18,7 @@ pipeline{
                     git --version
                     mvn -version
                     java -version
+                    docker -version
                 '''
             }
         }
